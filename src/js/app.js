@@ -2,18 +2,19 @@ import json from './parser';
 import read from './reader';
 
 export default class GameSavingLoader {
-  static load() {
-    const saving = read().then((data) => json(data));
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(saving);
-      }, 0);
-    });
+  constructor(saving) {
+    this.saving = saving;
   }
+
+    static load() {
+      const saving = read().then((data) => json(data));
+      return saving;
+    }  
 }
 
 GameSavingLoader.load().then((saving) => {
-  console.log(saving);
+  const result = new GameSavingLoader(saving);
+  console.log(result);
 }, (error) => {
   console.log(error);
 });
